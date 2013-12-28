@@ -2,17 +2,41 @@
 import xbmc
 import xbmcaddon
 import urllib
+import urllib2
 import urlparse
 import xbmcplugin
 import xbmcgui
+import time
+from xml.dom import minidom
 
 addon = xbmcaddon.Addon('plugin.video.c3')
+addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
 loc = addon.getLocalizedString
 addon_handle = int(sys.argv[1])
 
+def log(msg):
+	with open(addondir + 'logfile.txt', 'a') as file:
+		file.write("[" + time.strftime('%X') + "] " + msg + "\n")
+
 parameters = urlparse.parse_qsl(sys.argv[2][1:])
 parameters = dict(parameters)
+log(str(parameters))
 
+# xml stuff
+
+response = urllib2.urlopen('http://events.ccc.de/congress/2013/Fahrplan/schedule.xml')
+xml = response.read()
+xmldoc = minidom.parseString(xml)
+itemlist = xmldoc.getElementsByTagName('day')
+for s in itemlist:
+	if s.getAttribute('date') == time.strftime('%Y-%m-%d'):
+		for i in s.childNodes:
+			if i.nodeType == minidom.Node.ELEMENT_NODE:
+				log(i.getAttribute('name'))
+
+
+#stable
+    
 halls = { '1' : loc(30001), '2' : loc(30002), 'g' : loc(30003), '6' : loc(30004) }
 trans = { 'native' : loc(30005), 'translated' : loc(30006) }
 
