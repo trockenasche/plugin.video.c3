@@ -36,3 +36,4 @@ nosetests.xml
 .pydevproject
 
 plugin.video.c3.zip
+*.sublime-*
