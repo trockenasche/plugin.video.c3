@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.c3"
+       name="30C3 Streams"
+       version="0.0.1 alpha"
+       provider-name="1750Studios">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>30C3 streams</summary>
+    <description>Watch streams from the 30C3 (more content will be added in the future)</description>
+    <platform>all</platform>
+    <language>en de</language>
+    <license>GPL v3</license>
+    <source>https://github.com/Larnixva/plugin.video.c3</source>
+    <forum></forum>
+    <website>https://github.com/Larnixva/plugin.video.c3</website>
+	<email></email>
+  </extension>
+</addon>
