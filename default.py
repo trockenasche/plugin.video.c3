@@ -18,6 +18,9 @@ if not os.path.exists(addondir):
 loc = addon.getLocalizedString
 addon_handle = int(sys.argv[1])
 
+resolution = addon.getSetting('resolution') #LQ - 0; HQ - 1; HD - 2
+translated = addon.getSetting('translated') #original - 0; translated - 1
+
 def log(msg):
 	with open(addondir + 'logfile.txt', 'a') as file:
 		file.write("[" + time.strftime('%X') + "] " + msg + "\n")
@@ -74,54 +77,66 @@ def find_current_talk(node):
 				return event
 	return False
 
-talk = find_current(xml, 'Saal 1')
-if talk is not False:
-	log('Aktueller Talk in Saal 1: ' +  talk.getElementsByTagName('title').item(0).firstChild.data)
-
 #stable
     
 halls = { '1' : loc(30001), '2' : loc(30002), 'G' : loc(30003), '6' : loc(30004) }
-trans = { 'native' : loc(30005), 'translated' : loc(30006) }
+trans = { '0' : loc(30005), '1' : loc(30006) }
 
-urls = { '1' : { 'native' :
-					[['HD', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_hd'],
-					['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_lq']],
-				'translated' :
-					[['HD', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_hd'],
-					['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_lq']]
+urls = { '1' : { '0' :
+					{ '2' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_hd',
+					'1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_lq'},
+				'1' :
+					{ '2' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_hd',
+					'1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_lq' }
 			},
-		'2' : { 'native' :
-					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_native_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_native_lq']],
-				'translated' :
-					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_lq']]
+		'2' : { '0' :
+					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_native_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_native_lq' },
+				'1' :
+					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_lq' }
 			},
-		'G' : { 'native' :
-					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_lq']],
-				'translated' :
-					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_translated_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_translated_lq']]
+		'G' : { '0' :
+					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_lq' },
+				'1' :
+					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_translated_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_translated_lq' }
 			},
-		'6' : { 'native' :
-					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_native_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_native_lq']],
-				'translated' :
-					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_translated_hq'],
-					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_translated_lq']]
+		'6' : { '0' :
+					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_native_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_native_lq' },
+				'1' :
+					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_translated_hq',
+					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_translated_lq' }
 			}
 	}
 	
-if 'hall' not in parameters:
-	for key, value in halls.iteritems():
+#if 'hall' not in parameters:
+for key, value in halls.iteritems():
+	talk = find_current(xml, 'Saal ' + key)
+	if key != '1' and resolution == '2':
+		resolution = '1'
+	if talk is not False:
+		log('Aktueller Talk in Saal ' + key + ': ' +  talk.getElementsByTagName('title').item(0).firstChild.data + '\tURL: ' + urls[key][translated][resolution])
+		li = xbmcgui.ListItem(value + ' - ' + talk.getElementsByTagName('title').item(0).firstChild.data, iconImage='defaultvideo.png')
+		li.setInfo('video', {'title' : value + ' - ' + talk.getElementsByTagName('title').item(0).firstChild.data})
+		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
+	else:
+		log('Aktueller Talk in Saal ' + key + ': ' +  'none' + '\tURL: ' + urls[key][translated][resolution])
+		li = xbmcgui.ListItem(value + ' - ' + loc(30007), iconImage='defaultvideo.png')
+		li.setInfo('video', {'title' : value + ' - ' + loc(30007)})
+		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
+
+
+	'''for key, value in halls.iteritems():
 		parameters = {'hall' : key}
 		url = sys.argv[0] + '?' + urllib.urlencode(parameters)
 		li = xbmcgui.ListItem(value, iconImage='defaultfolder.png')
-		xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
-elif 'trans' not in parameters:
+		xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)'''
+'''elif 'trans' not in parameters:
 	for key, value in trans.iteritems():
 		parameters = {'hall' : parameters['hall'], 'trans' : key}
 		url = sys.argv[0] + '?' + urllib.urlencode(parameters)
@@ -131,5 +146,5 @@ else:
 	for i in urls[parameters['hall']][parameters['trans']]:
 		li = xbmcgui.ListItem(i[0], iconImage='defaultvideo.png')
 		li.setInfo('video', {'title' : halls[parameters['hall']] + ' - ' + trans[parameters['trans']] + ' (' + i[0] + ')'})
-		xbmcplugin.addDirectoryItem(handle=addon_handle, url=i[1], listitem=li)
+		xbmcplugin.addDirectoryItem(handle=addon_handle, url=i[1], listitem=li)'''
 xbmcplugin.endOfDirectory(addon_handle)
