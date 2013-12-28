@@ -1,4 +1,5 @@
-﻿import sys
+﻿import os
+import sys
 import xbmc
 import xbmcaddon
 import urllib
@@ -8,9 +9,12 @@ import xbmcplugin
 import xbmcgui
 import time
 from xml.dom import minidom
+from datetime import datetime, timedelta
 
 addon = xbmcaddon.Addon('plugin.video.c3')
 addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
+if not os.path.exists(addondir):
+	os.makedirs(addondir)
 loc = addon.getLocalizedString
 addon_handle = int(sys.argv[1])
 
@@ -20,24 +24,63 @@ def log(msg):
 
 parameters = urlparse.parse_qsl(sys.argv[2][1:])
 parameters = dict(parameters)
-log(str(parameters))
+
+if 'hall' not in parameters:
+	response = urllib2.urlopen('http://events.ccc.de/congress/2013/Fahrplan/schedule.xml')
+	xml = response.read()
+	with open(addondir + 'schedule.xml', 'w') as file:
+		file.write(xml)
+else:
+	with open(addondir + 'schedule.xml', 'r') as file:
+		xml = file.read()
 
 # xml stuff
 
-response = urllib2.urlopen('http://events.ccc.de/congress/2013/Fahrplan/schedule.xml')
-xml = response.read()
-xmldoc = minidom.parseString(xml)
-itemlist = xmldoc.getElementsByTagName('day')
-for s in itemlist:
-	if s.getAttribute('date') == time.strftime('%Y-%m-%d'):
-		for i in s.childNodes:
-			if i.nodeType == minidom.Node.ELEMENT_NODE:
-				log(i.getAttribute('name'))
+def parse_datetime_string(timestr):
+	timestr = timestr.rsplit('+', 1)
+	timeo = time.strptime(timestr[0], '%Y-%m-%dT%H:%M:%S')
+	timeo = datetime.fromtimestamp(time.mktime(timeo))
+	timezone = timestr[1].split(':', 1)
+	timezone = timedelta(hours=int(timezone[0]), minutes=int(timezone[1]))
+	return timeo - timezone
 
+def find_current(xmlstr, roomstr):
+	xmldoc = minidom.parseString(xmlstr)
+	itemlist = xmldoc.getElementsByTagName('day')
+	for s in itemlist:
+		if s.getAttribute('date') == time.strftime('%Y-%m-%d'):
+			return find_current_room(s.firstChild, roomstr)
+	return False
+
+def find_current_room(node, roomstr):
+	if (node.nodeType == minidom.Node.ELEMENT_NODE) and (node.nodeName == 'room') and (node.getAttribute('name') == roomstr):
+		return find_current_talk(node)
+	elif node.nextSibling is not None:
+		return find_current_room(node.nextSibling, roomstr)
+	else:
+		return False
+
+def find_current_talk(node):
+	for event in node.childNodes:
+		if (event.nodeType == minidom.Node.ELEMENT_NODE) and (event.nodeName == 'event'):
+			date = event.getElementsByTagName('date').item(0)
+			date = date.firstChild.data
+			date = parse_datetime_string(date)
+			duration = event.getElementsByTagName('duration').item(0)
+			duration = duration.firstChild.data
+			duration = duration.split(':', 1)
+			duration = timedelta(hours=int(duration[0]), minutes=int(duration[1]))
+			if date <= datetime.utcnow() < date + duration:
+				return event
+	return False
+
+talk = find_current(xml, 'Saal 1')
+if talk is not False:
+	log('Aktueller Talk in Saal 1: ' +  talk.getElementsByTagName('title').item(0).firstChild.data)
 
 #stable
     
-halls = { '1' : loc(30001), '2' : loc(30002), 'g' : loc(30003), '6' : loc(30004) }
+halls = { '1' : loc(30001), '2' : loc(30002), 'G' : loc(30003), '6' : loc(30004) }
 trans = { 'native' : loc(30005), 'translated' : loc(30006) }
 
 urls = { '1' : { 'native' :
@@ -56,7 +99,7 @@ urls = { '1' : { 'native' :
 					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_hq'],
 					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_lq']]
 			},
-		'g' : { 'native' :
+		'G' : { 'native' :
 					[['HQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_hq'],
 					['LQ', 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_lq']],
 				'translated' :
