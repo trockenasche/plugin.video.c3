@@ -4,3 +4,4 @@ v 0.0.1 alpha
 v 0.0.2 alpha
 - Removed settings.xml (not needed yet)
 - Fixed zip File structure for Frodo
+- Fixed changelog.txt
