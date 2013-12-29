@@ -3,5 +3,7 @@
     <category label="30100">
         <setting label="30101" type="enum" id="resolution" default="1" values="LQ (360p)|HQ (576p)|HD (1080p)"/>
         <setting label="30102" type="enum" id="translated" default="0" lvalues="30005|30006"/>
+        <setting type="sep"/>
+        <setting label="30103" type="action" option="close" action="RunScript(plugin.video.c3, resetetag)"/>
     </category>
 </settings>
