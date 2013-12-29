@@ -6,4 +6,11 @@
   <string id="30004">Saal 6</string>
   <string id="30005">Original</string>
   <string id="30006">Übersetzt</string>
+  <string id="30007">Kein Talk</string>
+  <string id="30008">Kein Stream verfügbar</string>
+  <string id="30100">Allgemein</string>
+  <string id="30101">Auflösung</string>
+  <string id="30102">Sprache</string>
+  <string id="30103">Cache löschen</string>
+  <string id="30104">Cache erfolgreich gelöscht</string>
 </strings>
