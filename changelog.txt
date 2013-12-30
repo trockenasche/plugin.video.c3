@@ -1,7 +1,14 @@
-v 0.0.1 alpha
-- First working release
+1.0.0
+- [+]   First stable release version
 
-v 0.0.2 alpha
-- Removed settings.xml (not needed yet)
-- Fixed zip File structure for Frodo
-- Fixed changelog.txt
+0.0.3 alpha
+- [*]   Using settings.xml again
+- [+]   Using .xml files for metadata
+
+0.0.2 alpha
+- [-]   Removed settings.xml (not needed yet)
+- [*]   Fixed zip File structure for Frodo
+- [*]   Fixed changelog.txt
+
+v 0.0.1 alpha
+- [+]   First working release
