@@ -12,7 +12,7 @@ from xml.dom import minidom
 from datetime import datetime, timedelta
 
 addon = xbmcaddon.Addon('plugin.video.c3')
-xmlurl = 'http://events.ccc.de/congress/2013/Fahrplan/schedule.xml'
+xmlurl = 'http://events.ccc.de/congress/2014/Fahrplan/schedule.xml'
 addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
 if not xbmcvfs.exists(addondir):
 	xbmcvfs.mkdirs(addondir)
@@ -59,7 +59,7 @@ parameters = urlparse.parse_qsl(sys.argv[2][1:])
 parameters = dict(parameters)
 
 if not xbmcvfs.exists(addondir + 'schedule.xml'):
-	response = urllib2.urlopen('http://events.ccc.de/congress/2013/Fahrplan/schedule.xml')
+	response = urllib2.urlopen('http://events.ccc.de/congress/2014/Fahrplan/schedule.xml')
 	xml = response.read()
 	with open(addondir + 'schedule.xml', 'w') as file:
 		file.write(xml)
@@ -175,7 +175,7 @@ for key, value in halls.iteritems():
 		#log(str(get_tag_info(talk, 'persons')))
 
 		info = {'genre'			:		get_tag_info(talk, 'track'),
-				'year'			:		'2013',
+				'year'			:		'2014',
 				'director'		:		' / '.join(get_tag_info(talk, 'persons')),
 				'writer'		:		' / '.join(get_tag_info(talk, 'persons')),
 				'plot'			:		get_tag_info(talk, 'description'),
