@@ -211,8 +211,12 @@ for key, value in halls.iteritems():
 		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 	else:
 		#log('Aktueller Talk in Saal ' + key + ': ' +  'none' + '\tURL: ' + urls[key][translated][resolution])
-		li = xbmcgui.ListItem(value + ' - ' + loc(30007), iconImage='defaultvideo.png')
-		li.setInfo('video', {'title' : value + ' - ' + loc(30007)})
+		if value != 'Sendezentrum':
+			li = xbmcgui.ListItem(value + ' - ' + loc(30007), iconImage='defaultvideo.png')
+			li.setInfo('video', {'title' : value + ' - ' + loc(30007)})
+		else:
+			li = xbmcgui.ListItem(value, iconImage='defaultvideo.png')
+			li.setInfo('video', {'title' : value})
 		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
 		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 xbmcplugin.endOfDirectory(addon_handle)
