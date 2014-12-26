@@ -130,35 +130,33 @@ halls = { '1' : loc(30001), '2' : loc(30002), 'G' : loc(30003), '6' : loc(30004)
 trans = { '0' : loc(30005), '1' : loc(30006) }
 
 urls = { '1' : { '0' :
-					{ '2' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_hd',
-					'1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_native_lq'},
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_native_sd'},
 				'1' :
-					{ '2' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_hd',
-					'1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal1_translated_lq' }
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_translated_sd' }
 			},
 		'2' : { '0' :
-					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_native_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_native_lq' },
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_native_sd'},
 				'1' :
-					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal2_translated_lq' }
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_translated_sd' }
 			},
 		'G' : { '0' :
-					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_native_lq' },
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_native_sd'},
 				'1' :
-					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_translated_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saalg_translated_lq' }
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_translated_sd' }
 			},
 		'6' : { '0' :
-					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_native_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_native_lq' },
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_native_sd'},
 				'1' :
-					{ '1' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_translated_hq',
-					'0' : 'rtmp://rtmp-hd.streaming.media.ccc.de:1935/stream/saal6_translated_lq' }
-			}
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_translated_sd' }
+			},
 	}
 	
 
