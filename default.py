@@ -28,7 +28,7 @@ if sys.argv[1] == 'resetetag':
 
 addon_handle = int(sys.argv[1])
 
-resolution = addon.getSetting('resolution') #LQ - 0; HQ - 1; HD - 2
+resolution = addon.getSetting('resolution') #SD - 0; HD - 1;
 translated = addon.getSetting('translated') #original - 0; translated - 1
 '''
 def log(msg):
@@ -126,7 +126,7 @@ def get_tag_info(node, tag):
 
 #dicts and so on
     
-halls = { '1' : loc(30001), '2' : loc(30002), 'G' : loc(30003), '6' : loc(30004) }
+halls = { '1' : loc(30001), '2' : loc(30002), 'G' : loc(30003), '6' : loc(30004), 'S' : loc(30009) }
 trans = { '0' : loc(30005), '1' : loc(30006) }
 
 urls = { '1' : { '0' :
@@ -157,6 +157,13 @@ urls = { '1' : { '0' :
 					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_translated_hd',
 					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_translated_sd' }
 			},
+		'S' : { '0' :
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_sd'},
+				'1' :
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_sd' }
+			},
 	}
 	
 
@@ -166,6 +173,8 @@ for key, value in halls.iteritems():
 	talk = find_current(xml, 'Saal ' + key)
 	if key != '1' and resolution == '2':
 		resolution = '1'
+	if key == 'S' and translated == '1':
+	    translated = '0'
 	if talk is not False:
 		#log('Aktueller Talk in Saal ' + key + ': ' +  get_tag_info(talk, 'title') + '\tURL: ' + urls[key][translated][resolution])
 		li = xbmcgui.ListItem(value + ' - ' + get_tag_info(talk, 'title'), get_tag_info(talk, 'subtitle'), iconImage='defaultvideo.png')
@@ -199,9 +208,11 @@ for key, value in halls.iteritems():
 		li.setInfo('video', info)
 		li.setThumbnailImage('defaultvideo.png')
 		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
+		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 	else:
 		#log('Aktueller Talk in Saal ' + key + ': ' +  'none' + '\tURL: ' + urls[key][translated][resolution])
 		li = xbmcgui.ListItem(value + ' - ' + loc(30007), iconImage='defaultvideo.png')
 		li.setInfo('video', {'title' : value + ' - ' + loc(30007)})
 		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
+		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 xbmcplugin.endOfDirectory(addon_handle)
