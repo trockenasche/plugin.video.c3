@@ -1,4 +1,5 @@
 plugin.video.c3
 ===============
 
-Watch live streams (and soon more) from the 31C3 (and soon more)
+Watch live streams from the 31C3.
+You can set the streaming quality and tranlation in the setting of this addon.
