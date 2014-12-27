@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.c3"
        name="31C3 Streams"
-       version="1.2.1"
+       version="1.3.0"
        provider-name="1750 Studios">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -11,13 +11,13 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>31C3 streams</summary>
-    <description>Watch streams from the 31C3 (more content will be added in the future)</description>
+    <description>Watch streams from the 31C3 and The Sendezentrum</description>
     <platform>all</platform>
     <language>en de</language>
     <license>GPL v3</license>
-    <source>https://github.com/Larnixva/plugin.video.c3</source>
+    <source>https://github.com/trockenasche/plugin.video.c3</source>
     <forum></forum>
-    <website>https://github.com/Larnixva/plugin.video.c3</website>
+    <website>https://github.com/trockenasche/plugin.video.c3</website>
 	<email></email>
   </extension>
 </addon>
