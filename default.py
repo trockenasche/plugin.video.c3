@@ -187,7 +187,7 @@ for key, value in halls.iteritems():
 	    translated = '0'
 	if talk is not False:
 		#log('Aktueller Talk in Saal ' + key + ': ' +  get_tag_info(talk, 'title') + '\tURL: ' + urls[key][translated][resolution])
-		li = xbmcgui.ListItem(value + ' - ' + get_tag_info(talk, 'title'), get_tag_info(talk, 'subtitle'), iconImage='defaultvideo.png')
+		li = xbmcgui.ListItem(value + ' - ' + get_tag_info(talk, 'title'), get_tag_info(talk, 'subtitle'), iconImage='http://streaming.media.ccc.de/thumbs/rooms/saal' + key + '.png')
 		#li.setProperty('TotalTime', '3600')
 		#log(str(get_tag_info(talk, 'persons')))
 
@@ -216,16 +216,16 @@ for key, value in halls.iteritems():
 			info['tagline'] += ' - English'
 		
 		li.setInfo('video', info)
-		li.setThumbnailImage('defaultvideo.png')
+		li.setThumbnailImage('http://streaming.media.ccc.de/thumbs/rooms/saal' + key + '.png')
 		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
 		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 	else:
 		#log('Aktueller Talk in Saal ' + key + ': ' +  'none' + '\tURL: ' + urls[key][translated][resolution])
 		if value != 'Sendezentrum':
-			li = xbmcgui.ListItem(value + ' - ' + loc(30007), iconImage='defaultvideo.png')
+			li = xbmcgui.ListItem(value + ' - ' + loc(30007), iconImage='http://streaming.media.ccc.de/thumbs/rooms/saal' + key + '.png')
 			li.setInfo('video', {'title' : value + ' - ' + loc(30007)})
 		else:
-			li = xbmcgui.ListItem(value, iconImage='defaultvideo.png')
+			li = xbmcgui.ListItem(value, iconImage='http://streaming.media.ccc.de/thumbs/rooms/sendezentrum.png')
 			li.setInfo('video', {'title' : value})
 		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
 		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
