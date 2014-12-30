@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="30100">
+        <setting label="30010" type="enum" id="streamtype" default="0" values="HLS|RTMP|WebM"/>	
         <setting label="30101" type="enum" id="resolution" default="2" values="SD (576p)|HD (1080p)|Auto"/>
         <setting label="30102" type="enum" id="translated" default="0" lvalues="30005|30006"/>
         <setting type="sep"/>

@@ -28,6 +28,7 @@ if sys.argv[1] == 'resetetag':
 
 addon_handle = int(sys.argv[1])
 
+streamtype = addon.getSetting('streamtype') #HLS - 0; RTMP - 1; WebM - 2
 resolution = addon.getSetting('resolution') #SD - 0; HD - 1; Auto - 2
 translated = addon.getSetting('translated') #original - 0; translated - 1
 '''
@@ -129,7 +130,9 @@ def get_tag_info(node, tag):
 halls = { '1' : loc(30001), '2' : loc(30002), 'G' : loc(30003), '6' : loc(30004), 'S' : loc(30009) }
 trans = { '0' : loc(30005), '1' : loc(30006) }
 
-urls = { '1' : { '0' :
+urls = { '1' :
+			{ '0' :
+				{ '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s1_native.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s1_native_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s1_native_sd.m3u8'},
@@ -137,8 +140,27 @@ urls = { '1' : { '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s1_translated.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s1_translated_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s1_translated_sd.m3u8' }
+				},
+			'1' :
+				{ '0':
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_native_sd'},
+				'1' :
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s1_translated_sd' }
+				},
+			'2' :
+				{ '0':
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s1_native_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s1_native_sd.webm'},
+				'1' :
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s1_translated_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s1_translated_sd.webm' }
+				}
 			},
-		'2' : { '0' :
+		'2' :
+			{ '0' :
+				{ '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s2_native.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s2_native_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s2_native_sd.m3u8'},
@@ -146,8 +168,27 @@ urls = { '1' : { '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s2_translated.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s2_translated_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s2_translated_sd.m3u8' }
+				},
+			'1' :
+				{ '0':
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_native_sd'},
+				'1' :
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s2_translated_sd' }
+				},
+			'2' :
+				{ '0':
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s2_native_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s2_native_sd.webm'},
+				'1' :
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s2_translated_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s2_translated_sd.webm' }
+				}
 			},
-		'G' : { '0' :
+		'G' :
+			{ '0' :
+				{ '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s3_native.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s3_native_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s3_native_sd.m3u8'},
@@ -155,8 +196,27 @@ urls = { '1' : { '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s3_translated.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s3_translated_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s3_translated_sd.m3u8' }
+				},
+			'1' :
+				{ '0':
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_native_sd'},
+				'1' :
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s3_translated_sd' }
+				},
+			'2' :
+				{ '0':
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s3_native_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s3_native_sd.webm'},
+				'1' :
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s3_translated_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s3_translated_sd.webm' }
+				}
 			},
-		'6' : { '0' :
+		'6' :
+			{ '0' :
+				{ '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s4_native.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s4_native_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s4_native_sd.m3u8'},
@@ -164,8 +224,27 @@ urls = { '1' : { '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s4_translated.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s4_translated_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s4_translated_sd.m3u8' }
+					},
+			'1' :
+				{ '0':
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_native_sd'},
+				'1' :
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s4_translated_sd' }
+				},
+			'2' :
+				{ '0':
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s4_native_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s4_native_sd.webm'},
+				'1' :
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s4_translated_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s4_translated_sd.webm' }
+				}
 			},
-		'S' : { '0' :
+		'S' :
+			{ '0' :
+				{ '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s5_native.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s5_native_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s5_native_sd.m3u8'},
@@ -173,9 +252,26 @@ urls = { '1' : { '0' :
 					{ '2' : 'http://hls.stream.c3voc.de/hls/s5_translated.m3u8',
 					'1' : 'http://hls.stream.c3voc.de/hls/s5_translated_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s5_translated_sd.m3u8' }
-			},
+				},
+			'1' :
+				{ '0':
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_sd'},
+				'1' :
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_translated_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_translated_sd' }
+				},
+			'2' :
+				{ '0':
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s5_native_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s5_native_sd.webm'},
+				'1' :
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s5_translated_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s5_translated_sd.webm' }
+				}
+			}
 	}
-	
+
 
 # display streams
 
@@ -183,8 +279,12 @@ for key, value in halls.iteritems():
 	talk = find_current(xml, 'Saal ' + key)
 #	if key != '1' and resolution == '2':
 #		resolution = '1'
+	if streamtype == '1' and resolution == '2':
+		resolution = '1'
+	if streamtype == '2' and resolution == '2':
+		resolution = '1'
 	if key == 'S' and translated == '1':
-	    translated = '0'
+		translated = '0'
 	if talk is not False:
 		#log('Aktueller Talk in Saal ' + key + ': ' +  get_tag_info(talk, 'title') + '\tURL: ' + urls[key][translated][resolution])
 		li = xbmcgui.ListItem(value + ' - ' + get_tag_info(talk, 'title'), get_tag_info(talk, 'subtitle'), iconImage='defaultvideo.png')
@@ -217,7 +317,7 @@ for key, value in halls.iteritems():
 		
 		li.setInfo('video', info)
 		li.setThumbnailImage('defaultvideo.png')
-		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
+		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][streamtype][translated][resolution], listitem=li)
 		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 	else:
 		#log('Aktueller Talk in Saal ' + key + ': ' +  'none' + '\tURL: ' + urls[key][translated][resolution])
@@ -227,6 +327,6 @@ for key, value in halls.iteritems():
 		else:
 			li = xbmcgui.ListItem(value, iconImage='defaultvideo.png')
 			li.setInfo('video', {'title' : value})
-		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][translated][resolution], listitem=li)
+		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][streamtype][translated][resolution], listitem=li)
 		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 xbmcplugin.endOfDirectory(addon_handle)
