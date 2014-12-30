@@ -249,25 +249,25 @@ urls = { '1' :
 					'1' : 'http://hls.stream.c3voc.de/hls/s5_native_hd.m3u8',
 					'0' : 'http://hls.stream.c3voc.de/hls/s5_native_sd.m3u8'},
 				'1' :
-					{ '2' : 'http://hls.stream.c3voc.de/hls/s5_translated.m3u8',
-					'1' : 'http://hls.stream.c3voc.de/hls/s5_translated_hd.m3u8',
-					'0' : 'http://hls.stream.c3voc.de/hls/s5_translated_sd.m3u8' }
+					{ '2' : 'http://hls.stream.c3voc.de/hls/s5_native.m3u8',
+					'1' : 'http://hls.stream.c3voc.de/hls/s5_native_hd.m3u8',
+					'0' : 'http://hls.stream.c3voc.de/hls/s5_native_sd.m3u8' }
 				},
 			'1' :
 				{ '0':
 					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_hd',
 					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_sd'},
 				'1' :
-					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_translated_hd',
-					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_translated_sd' }
+					{ '1' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_hd',
+					'0' : 'rtmp://rtmp.stream.c3voc.de:1935/stream/s5_native_sd' }
 				},
 			'2' :
 				{ '0':
 					{ '1' : 'http://webm.stream.c3voc.de:8000/s5_native_hd.webm',
 					'0' : 'http://webm.stream.c3voc.de:8000/s5_native_sd.webm'},
 				'1' :
-					{ '1' : 'http://webm.stream.c3voc.de:8000/s5_translated_hd.webm',
-					'0' : 'http://webm.stream.c3voc.de:8000/s5_translated_sd.webm' }
+					{ '1' : 'http://webm.stream.c3voc.de:8000/s5_native_hd.webm',
+					'0' : 'http://webm.stream.c3voc.de:8000/s5_native_sd.webm' }
 				}
 			}
 	}
@@ -283,10 +283,10 @@ for key, value in halls.iteritems():
 		resolution = '1'
 	if streamtype == '2' and resolution == '2':
 		resolution = '1'
-	if key == 'S' and translated == '1':
-		translated = '0'
+#	if key == 'S' and translated == '1':
+#		translated = '0'
 	if talk is not False:
-		#log('Aktueller Talk in Saal ' + key + ': ' +  get_tag_info(talk, 'title') + '\tURL: ' + urls[key][translated][resolution])
+		#log('Aktueller Talk in Saal ' + key + ': ' +  get_tag_info(talk, 'title') + '\tURL: ' + urls[key][streamtype][translated][resolution])
 		li = xbmcgui.ListItem(value + ' - ' + get_tag_info(talk, 'title'), get_tag_info(talk, 'subtitle'), iconImage='defaultvideo.png')
 		#li.setProperty('TotalTime', '3600')
 		#log(str(get_tag_info(talk, 'persons')))
@@ -320,7 +320,7 @@ for key, value in halls.iteritems():
 		xbmcplugin.addDirectoryItem(handle=addon_handle, url=urls[key][streamtype][translated][resolution], listitem=li)
 		xbmcplugin.addSortMethod(handle=addon_handle, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
 	else:
-		#log('Aktueller Talk in Saal ' + key + ': ' +  'none' + '\tURL: ' + urls[key][translated][resolution])
+		#log('Aktueller Talk in Saal ' + key + ': ' +  'none' + '\tURL: ' + urls[key][streamtype][translated][resolution])
 		if value != 'Sendezentrum':
 			li = xbmcgui.ListItem(value + ' - ' + loc(30007), iconImage='defaultvideo.png')
 			li.setInfo('video', {'title' : value + ' - ' + loc(30007)})
